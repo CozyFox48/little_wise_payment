@@ -65,7 +65,6 @@ export const AuthProvider = (props) => {
     const initialized = useRef(false);
 
     const initialize = async () => {
-        // Prevent from calling twice in development mode with React.StrictMode enabled
         if (initialized.current) {
             return;
         }
@@ -79,7 +78,7 @@ export const AuthProvider = (props) => {
         } catch (err) {
             console.error(err);
         }
-
+        console.log(isAuthenticated);
         if (isAuthenticated) {
             const userStr = localStorage.getItem("user");
             if (userStr) {
@@ -105,24 +104,20 @@ export const AuthProvider = (props) => {
         []
     );
 
-    const signIn = async (name, password) => {
+    const signIn = async (email, password) => {
         return axios.post("/api/auth/signin", {
-            "username": name,
+            "email": email,
             "password": password
         }).then(response => {
             if (response.data.token) {
-                localStorage.setItem("user", JSON.stringify(response.data));
+
                 axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
 
                 const user = {
-                    id: response.data.id,
-                    username: response.data.username,
                     token: response.data.token,
-                    bankNumber: response.data.bankNumber,
-                    balance: response.data.balance,
-                    currency: response.data.currency
+                    ...response.data._doc
                 };
-
+                localStorage.setItem("user", JSON.stringify(user));
                 dispatch({
                     type: HANDLERS.SIGN_IN,
                     payload: user
@@ -131,10 +126,10 @@ export const AuthProvider = (props) => {
         });
     };
 
-    const signUp = async (bankNumber, name, password) => {
-        return axios.post("/auth/signup", {
-            "username": name,
-            "bankNumber": bankNumber,
+    const signUp = async (username, email, password) => {
+        return axios.post("/api/auth/signup", {
+            "username": username,
+            "email": email,
             "password": password
         })
     };

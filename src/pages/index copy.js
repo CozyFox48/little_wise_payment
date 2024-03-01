@@ -1,6 +1,5 @@
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
-import DashboardLayout from "src/layouts/DashboardLayout";
 
 // ** Icons Imports
 import Poll from 'mdi-material-ui/Poll'
@@ -98,6 +97,5 @@ const Dashboard = () => {
     </ApexChartWrapper>
   )
 }
-Dashboard.getLayout = page => <DashboardLayout>{page}</DashboardLayout>
 
 export default Dashboard

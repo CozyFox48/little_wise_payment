@@ -35,8 +35,8 @@ const UserLayout = withAuthGuard(({ children }) => {
   return (
     <VerticalLayout
       hidden={hidden}
+      isSidebar={false}
       settings={settings}
-      isSidebar={true}
       saveSettings={saveSettings}
       verticalNavItems={VerticalNavItems()} // Navigation Items
       afterVerticalNavMenuContent={UpgradeToProImg}
@@ -52,7 +52,7 @@ const UserLayout = withAuthGuard(({ children }) => {
       )}
     >
       {children}
-      <UpgradeToProButton />
+      {/* <UpgradeToProButton /> */}
     </VerticalLayout>
   )
 })
