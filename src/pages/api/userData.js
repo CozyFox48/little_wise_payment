@@ -1,5 +1,6 @@
 import withAuth from "../../server/utils/withAuth";
 import User from "../../server/model/user";
+
 const handler=async (req, res)=> {
     if (req.method === 'GET') {
         const user=await User.findById(req.query.userID);
@@ -19,4 +20,5 @@ const handler=async (req, res)=> {
         });
     }
 }
+
 export default withAuth(handler);

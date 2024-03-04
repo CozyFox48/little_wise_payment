@@ -1,98 +1,55 @@
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import DashboardLayout from "src/layouts/DashboardLayout";
-
-// ** Icons Imports
-import Poll from 'mdi-material-ui/Poll'
-import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
-import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
-import BriefcaseVariantOutline from 'mdi-material-ui/BriefcaseVariantOutline'
-
-// ** Custom Components Imports
-import CardStatisticsVerticalComponent from 'src/@core/components/card-statistics/card-stats-vertical'
+import Card from '@mui/material/Card'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import CardContent from '@mui/material/CardContent'
+import { styled, useTheme } from '@mui/material/styles'
 
 // ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
-// ** Demo Components Imports
-import Table from 'src/views/dashboard/Table'
-import Trophy from 'src/views/dashboard/Trophy'
-import TotalEarning from 'src/views/dashboard/TotalEarning'
-import StatisticsCard from 'src/views/dashboard/StatisticsCard'
-import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
-import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
-import SalesByCountries from 'src/views/dashboard/SalesByCountries'
+// Styled component for the triangle shaped background image
+const TriangleImg = styled('img')({
+  right: 0,
+  bottom: 0,
+  height: 170,
+  position: 'absolute'
+})
 
 const Dashboard = () => {
+  // ** Hook
+  const theme = useTheme()
+  const imageSrc = theme.palette.mode === 'light' ? 'triangle-light.png' : 'triangle-dark.png'
+
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
-        <Grid item xs={12} md={4}>
-          <Trophy />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <StatisticsCard />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <WeeklyOverview />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <TotalEarning />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Grid container spacing={6}>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='$25.6k'
-                icon={<Poll />}
-                color='success'
-                trendNumber='+42%'
-                title='Total Profit'
-                subtitle='Weekly Profit'
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='$78'
-                title='Refunds'
-                trend='negative'
-                color='secondary'
-                trendNumber='-15%'
-                subtitle='Past Month'
-                icon={<CurrencyUsd />}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='862'
-                trend='negative'
-                trendNumber='-18%'
-                title='New Project'
-                subtitle='Yearly Project'
-                icon={<BriefcaseVariantOutline />}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='15'
-                color='warning'
-                trend='negative'
-                trendNumber='-18%'
-                subtitle='Last Week'
-                title='Sales Queries'
-                icon={<HelpCircleOutline />}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <SalesByCountries />
-        </Grid>
-        <Grid item xs={12} md={12} lg={8}>
-          <DepositWithdraw />
+        <Grid item xs={12}>
+          <Typography variant='h4'>All Projects</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Table />
+          <Button variant='contained'>
+            Create New
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Card sx={{ position: 'relative' }}>
+            <CardContent>
+              <Typography variant='h6'>Congratulations John!</Typography>
+              <Typography variant='body2' sx={{ letterSpacing: '0.25px' }}>
+                Best seller of the month
+              </Typography>
+              <Typography variant='h5' sx={{ my: 4, color: 'primary.main' }}>
+                $42.8k
+              </Typography>
+              <Button size='small' variant='contained'>
+                View Detail
+              </Button>
+              <TriangleImg alt='triangle background' src={`/images/misc/${imageSrc}`} />
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     </ApexChartWrapper>

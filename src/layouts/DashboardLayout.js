@@ -5,7 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 // !Do not remove this Layout import
 import VerticalLayout from 'src/@core/layouts/VerticalLayout';
 import VerticalNavItems from 'src/navigation/vertical';
-import { withAuthGuard } from 'src/hocs/with-auth-guard';
+import { withAuthGuard } from 'src/@core/hocs/with-auth-guard';
 
 // ** Component Import
 import UpgradeToProButton from './components/UpgradeToProButton';

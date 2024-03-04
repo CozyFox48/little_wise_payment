@@ -28,4 +28,5 @@ const handler = async (req, res) => {
     // Handle any other HTTP method
   }
 }
+
 export default withAuth(handler);

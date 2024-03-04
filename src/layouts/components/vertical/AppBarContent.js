@@ -14,6 +14,8 @@ import ModeToggler from 'src/@core/layouts/components/shared-components/ModeTogg
 import OpenWallet from 'src/@core/layouts/components/shared-components/OpenWallet'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
 import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
+import { ViewDashboardOutline } from 'mdi-material-ui'
+import Link from 'next/link';
 
 const AppBarContent = props => {
   // ** Props
@@ -62,7 +64,12 @@ const AppBarContent = props => {
             />
           </Box>
         )} */}
-        <OpenWallet/>
+        <Link href="/">
+          <IconButton color='inherit' aria-haspopup='true' >
+            <ViewDashboardOutline />
+          </IconButton>
+        </Link>
+        <OpenWallet />
         <ModeToggler settings={settings} saveSettings={saveSettings} />
         <NotificationDropdown />
         <UserDropdown />

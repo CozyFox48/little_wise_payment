@@ -5,12 +5,11 @@ import Link from 'next/link';
 const ModeToggler = () => {
 
   return (
-    <Link href="/your-target-page">
+    <Link href="/wallet">
       <IconButton color='inherit' aria-haspopup='true' >
         <WalletIcon />
       </IconButton>
     </Link>
-
   )
 }
 

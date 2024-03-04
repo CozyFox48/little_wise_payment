@@ -1,6 +1,6 @@
 // ** React Imports
 import { useState } from 'react'
-import { useAuth } from 'src/hooks/use-auth';
+import { useAuth } from 'src/@core/hooks/use-auth';
 
 // ** Next Imports
 import Link from 'next/link'

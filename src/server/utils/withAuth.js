@@ -1,6 +1,4 @@
 import jwt from 'jsonwebtoken';
-import config from "./../../../global.config";
-import User from "../model/user";
 
 const withAuth = (handler) => {
     return (req, res) => {
@@ -8,10 +6,12 @@ const withAuth = (handler) => {
             return res.status(400).json({ error: 'No credentials sent!' });
         }
         const token = req.headers.authorization;
-        jwt.verify(token.slice(7), config.secret, async (err, decoded) => {
+        jwt.verify(token.slice(7), process.env.JWT_SECRET, async (err, decoded) => {
+
             if (err) {
                 return res.status(401).send({ message: "Unauthorized!" });
             }
+
             return handler(req, res);
 
         });
