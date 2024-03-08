@@ -18,8 +18,10 @@ export default async function handler(req, res) {
 
             const wallet = await Wallet.create({
                 owner: user._id,
+                deleted:false,
                 balance: [{ currency: 'USD', amount: 0 }, { currency: 'EUR', amount: 0 }, { currency: 'GBP', amount: 0 }]
             });
+            
             await User.findByIdAndUpdate(user._id, { $set: { wallet: wallet._id } });
             res.status(200).send({ message: "User was registered Sucessfully!" });
         } catch (err) {

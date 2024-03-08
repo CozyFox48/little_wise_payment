@@ -12,6 +12,10 @@ const UserSchema = new mongoose.Schema({
     }
   }],
   nickname:String,
+  deleted:{
+    type:Boolean,
+    default:false
+  },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
   business:{ type: mongoose.Schema.Types.ObjectId, ref: 'business' },
   transactions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'transaction' }],

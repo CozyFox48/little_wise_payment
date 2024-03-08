@@ -1,13 +1,12 @@
 import withAuth from "src/server/utils/withAuth";
 import Wallet from "src/server/model/wallet";
-import dbConnect from "src/server/dbConnect";
+import Business from "src/server/model/business";
 
 const handler = async (req, res) => {
-  await dbConnect();
   if (req.method === 'GET') {
     try {
       const { slug } = req.query;
-      const result = await Wallet.findById(slug);
+      const result = await Business.findById(slug).populate('owner');
 
       return res.status(200).json({
         success: true,
@@ -21,14 +20,13 @@ const handler = async (req, res) => {
       });
     }
 
-  } else if (req.method == "POST") {
+  } else if (req.method === "DELETE") {
     try {
       const { slug } = req.query;
-      const result = await Wallet.findByIdAndUpdate(slug, req.body.data);
+      await Business.findByIdAndUpdate(slug, { $set: { deleted: true } })
 
       return res.status(200).json({
-        success: true,
-        data: result
+        success: true
       });
 
     } catch (e) {

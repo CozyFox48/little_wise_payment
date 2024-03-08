@@ -1,14 +1,16 @@
 // ** React Imports
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 // ** ThemeConfig Import
 import themeConfig from 'src/configs/themeConfig'
 
-const initialSettings = {
+let initialSettings = {
   themeColor: 'primary',
   mode: themeConfig.mode,
-  contentWidth: themeConfig.contentWidth
+  contentWidth: themeConfig.contentWidth,
+  selectedProject: ''
 }
+
 
 // ** Create Context
 export const SettingsContext = createContext({
@@ -17,11 +19,25 @@ export const SettingsContext = createContext({
 })
 
 export const SettingsProvider = ({ children }) => {
+  try {
+    const settingStr = localStorage.getItem("settings");
+    if (settingStr) {
+      initialSettings = JSON.parse(settingStr);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+
   // ** State
   const [settings, setSettings] = useState({ ...initialSettings })
 
-  const saveSettings = updatedSettings => {
+  useEffect(()=>{
+    localStorage.setItem("settings", JSON.stringify(settings));
+  },[settings])
+
+  const saveSettings = async updatedSettings => {
     setSettings(updatedSettings)
+    
   }
 
   return <SettingsContext.Provider value={{ settings, saveSettings }}>{children}</SettingsContext.Provider>

@@ -5,41 +5,47 @@ import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import { useRouter } from 'next/router';
 
 // ** Icons Imports
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 
 const CardStatsVertical = props => {
   // ** Props
-  const { title, subtitle, color, icon, stats, trend, trendNumber } = props
+  const { id, subtitle, color, icon, stats} = props
+  const router = useRouter();
 
   return (
-    <Card>
-      <CardContent>
-        <Box sx={{ display: 'flex', marginBottom: 5.5, alignItems: 'flex-start', justifyContent: 'space-between' }}>
-          <Avatar sx={{ boxShadow: 3, marginRight: 4, color: 'common.white', backgroundColor: `${color}.main` }}>
-            {icon}
-          </Avatar>
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
-            <DotsVertical />
-          </IconButton>
-        </Box>
-        <Typography sx={{ fontWeight: 600, fontSize: '0.875rem' }}>{title}</Typography>
-        <Box sx={{ marginTop: 1.5, display: 'flex', flexWrap: 'wrap', marginBottom: 1.5, alignItems: 'flex-start' }}>
-          <Typography variant='h6' sx={{ mr: 2 }}>
-            {stats}
-          </Typography>
-          <Typography
-            component='sup'
-            variant='caption'
-            sx={{ color: trend === 'positive' ? 'success.main' : 'error.main' }}
-          >
-            {trendNumber}
-          </Typography>
-        </Box>
-        <Typography variant='caption'>{subtitle}</Typography>
-      </CardContent>
+
+    <Card style={{ width: "100%" }}>
+      <Button style={{ width: "100%" }} onClick={()=>{router.push('/project/wallets/'+id)}}>
+        <CardContent style={{ width: "100%" }}>
+
+
+          <Box sx={{ display: 'flex', marginBottom: 5.5, alignItems: 'flex-start', justifyContent: 'space-between', }}>
+            <Avatar sx={{ boxShadow: 3, marginRight: 4, color: 'common.white', backgroundColor: `${color}.main` }}>
+              {icon}
+            </Avatar>
+            <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
+              <DotsVertical />
+            </IconButton>
+          </Box>
+
+          <Box sx={{ marginTop: 1.5, display: 'flex', flexWrap: 'wrap', marginBottom: 1.5, width: "100%" }}>
+            <Typography variant='h6' >
+              {stats}
+            </Typography>
+          </Box>
+          <Box sx={{ marginTop: 1.5, display: 'flex', flexWrap: 'wrap', width: "100%" }}>
+            <Typography variant='caption'>{subtitle}</Typography>
+          </Box>
+
+
+        </CardContent>
+      </Button>
     </Card>
+
   )
 }
 

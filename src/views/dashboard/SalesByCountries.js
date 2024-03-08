@@ -57,8 +57,8 @@ const data = [
     sales: '42k',
     title: '$45k',
     trendDir: 'up',
-    avatarText: 'KO',
-    subtitle: 'Korea',
+    avatarText: 'CN',
+    subtitle: 'China',
     trendNumber: '16.2%',
     avatarColor: 'error',
     trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
