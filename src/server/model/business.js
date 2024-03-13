@@ -12,9 +12,14 @@ const UserSchema = new mongoose.Schema({
     id: { type: mongoose.Schema.Types.ObjectId, ref: 'wallet' },
     isDefault: Boolean
   }],
-  customers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'wallet' }],
+   members: [{
+    id:{ type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    role:String,
+    salary:Number,
+    date:Date
+  }],
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'product' }],
-  members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }]
+  customers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }]
 });
 
 module.exports = mongoose.models.business || mongoose.model('business', UserSchema);

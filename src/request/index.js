@@ -32,6 +32,14 @@ class Service {
     getWallets4business(business_id) {
         return api.get(`/api/business/wallets/${business_id}`);
     }
+
+    getMembers(business_id) {
+        return api.get(`/api/business/members/${business_id}`);
+    }
+
+    createMember(data, business_id) {
+        return api.put(`/api/business/members/${business_id}`, { data });
+    }
 }
 
 export default new Service();

@@ -13,13 +13,13 @@ import DotsVertical from 'mdi-material-ui/DotsVertical'
 
 const CardStatsVertical = props => {
   // ** Props
-  const { id, subtitle, color, icon, stats} = props
+  const { id, subtitle, color, icon, stats } = props
   const router = useRouter();
 
   return (
 
     <Card style={{ width: "100%" }}>
-      <Button style={{ width: "100%" }} onClick={()=>{router.push('/project/wallets/'+id)}}>
+      <Button style={{ width: "100%" }} onClick={() => { router.push('/project/wallets/' + id) }}>
         <CardContent style={{ width: "100%" }}>
 
 
@@ -27,9 +27,6 @@ const CardStatsVertical = props => {
             <Avatar sx={{ boxShadow: 3, marginRight: 4, color: 'common.white', backgroundColor: `${color}.main` }}>
               {icon}
             </Avatar>
-            <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
-              <DotsVertical />
-            </IconButton>
           </Box>
 
           <Box sx={{ marginTop: 1.5, display: 'flex', flexWrap: 'wrap', marginBottom: 1.5, width: "100%" }}>

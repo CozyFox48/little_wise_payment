@@ -25,19 +25,18 @@ export const SettingsProvider = ({ children }) => {
       initialSettings = JSON.parse(settingStr);
     }
   } catch (err) {
-    console.error(err);
   }
 
   // ** State
   const [settings, setSettings] = useState({ ...initialSettings })
 
-  useEffect(()=>{
+  useEffect(() => {
     localStorage.setItem("settings", JSON.stringify(settings));
-  },[settings])
+  }, [settings])
 
   const saveSettings = async updatedSettings => {
     setSettings(updatedSettings)
-    
+
   }
 
   return <SettingsContext.Provider value={{ settings, saveSettings }}>{children}</SettingsContext.Provider>

@@ -5,9 +5,16 @@ import { useState, useEffect } from 'react';
 // ** Icons Imports
 import { WalletOutline } from 'mdi-material-ui'
 import { useSettings } from 'src/@core/hooks/useSettings';
-
-// ** Custom Components Imports
-import CardStatisticsVerticalComponent from 'src/@core/components/card-statistics/card-stats-vertical'
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import Chip from '@mui/material/Chip'
+import Table from '@mui/material/Table'
+import TableRow from '@mui/material/TableRow'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import Typography from '@mui/material/Typography'
+import TableContainer from '@mui/material/TableContainer'
 
 // ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
@@ -15,13 +22,9 @@ import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 // ** Demo Components Imports
 import Request from 'src/request';
 import ProjectLayout from "src/layouts/ProjectLayout";
-
-import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
-import Table from 'src/views/dashboard/Table'
 
 const style = {
     position: 'absolute',
@@ -43,20 +46,27 @@ const Dashboard = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [open, setOpen] = useState(false);
-    const [nickname, setNickname] = useState('');
+
+    const [requestBody, setRequestBody] = useState({
+        email: '',
+        role: '',
+        salary: 0
+    });
 
     useEffect(() => {
-        Request.getWallets4business(settings.selectedProject).then((response) => {
+        Request.getMembers(settings.selectedProject).then((response) => {
             setData(response.data.data);
+            console.log(response.data.data)
         }).catch(error => {
             console.log(error.response)
         });
     }, [])
 
     const createWallet = () => {
-        Request.createWallet({ nickname: nickname, business_id: settings.selectedProject }).then((response) => {
+        Request.createMember(requestBody, settings.selectedProject).then((response) => {
             setOpen(false);
             setData(response.data.data);
+
         }).catch(error => {
             console.log(error.response)
         });
@@ -74,9 +84,22 @@ const Dashboard = () => {
                     <Grid container spacing={7}>
                         <Grid item xs={12}>
                             <TextField
-                                fullWidth label='Name' placeholder='wallet name here...'
-                                value={nickname}
-                                onChange={(event) => { setNickname(event.target.value) }} />
+                                fullWidth label='Email' placeholder='email name here...'
+                                value={requestBody.email}
+                                onChange={(event) => { setRequestBody(prev => { return { ...prev, email: event.target.value } }) }} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth label='Role' placeholder='role name here...'
+                                value={requestBody.role}
+                                onChange={(event) => { setRequestBody(prev => { return { ...prev, role: event.target.value } }) }} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth label='Salary' placeholder='salary here...'
+                                value={requestBody.salary}
+                                type='number'
+                                onChange={(event) => { setRequestBody(prev => { return { ...prev, salary: event.target.value } }) }} />
                         </Grid>
                         <Grid item xs={12} onClick={createWallet}>
                             <Button variant='contained'>Create</Button>
@@ -95,9 +118,51 @@ const Dashboard = () => {
                     </Button>
                 </Grid>
                 <Grid item xs={12}>
-                    <Table />
-                </Grid>
+                    <Card>
+                        <TableContainer>
+                            <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell>Email</TableCell>
+                                        <TableCell>Date</TableCell>
+                                        <TableCell>Salary</TableCell>
+                                        <TableCell>Status</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {data?.map(row => (
+                                        <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
+                                            <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
+                                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                                    <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row?.id?.username}</Typography>
+                                                    <Typography variant='caption'>{row?.role}</Typography>
+                                                </Box>
+                                            </TableCell>
+                                            <TableCell>{row?.id?.email}</TableCell>
+                                            <TableCell>{row?.date}</TableCell>
+                                            <TableCell>{row?.salary}</TableCell>
+                                            <TableCell>
+                                                <Chip
+                                                    label={"Delete"}
+                                                    color={"error"}
+                                                    sx={{
+                                                        height: 24,
+                                                        fontSize: '0.75rem',
+                                                        textTransform: 'capitalize',
+                                                        '& .MuiChip-label': { fontWeight: 500 }
+                                                    }}
+                                                >
 
+                                                </Chip>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Card>
+                </Grid>
             </Grid>
         </ApexChartWrapper>
     )

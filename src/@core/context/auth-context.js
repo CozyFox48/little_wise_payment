@@ -78,7 +78,6 @@ export const AuthProvider = (props) => {
         } catch (err) {
             console.error(err);
         }
-        console.log(isAuthenticated);
         if (isAuthenticated) {
             const userStr = localStorage.getItem("user");
             if (userStr) {

@@ -42,6 +42,7 @@ const Dashboard = () => {
     const router = useRouter();
 
     useEffect(() => {
+        console.log(settings.selectedProject);
         Request.getOneBusiness(settings.selectedProject).then((response) => {
             setData(response.data.data)
         }).catch(error => {
@@ -49,7 +50,7 @@ const Dashboard = () => {
         });
     }, [])
 
-    const deleteBusiness=()=>{
+    const deleteBusiness = () => {
         Request.deleteOneBusiness(settings.selectedProject).then((response) => {
             router.push('/');
         }).catch(error => {
@@ -137,7 +138,7 @@ const Dashboard = () => {
                                 <Typography variant='body2'>You will permanently remove all dependent data.</Typography>
                             </Box>
                             <Box sx={{ display: "flex", justifyContent: "center" }}>
-                                <Button fullWidth variant='contained' sx={{ width: "300px",backgroundColor:"error.main" }} onClick={deleteBusiness}>
+                                <Button fullWidth variant='contained' sx={{ width: "300px", backgroundColor: "error.main" }} onClick={deleteBusiness}>
                                     Delete
                                 </Button>
                             </Box>

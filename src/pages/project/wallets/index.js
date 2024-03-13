@@ -38,14 +38,16 @@ const style = {
 const Dashboard = () => {
     const { settings, saveSettings } = useSettings();
     const [data, setData] = useState([])
-    
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [open, setOpen] = useState(false);
     const [nickname, setNickname] = useState('');
 
     useEffect(() => {
+        console.log(settings.selectedProject);
         Request.getWallets4business(settings.selectedProject).then((response) => {
+            console.log(response.data.dat)
             setData(response.data.data);
         }).catch(error => {
             console.log(error.response)

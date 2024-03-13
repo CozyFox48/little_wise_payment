@@ -6,11 +6,13 @@ const handler = async (req, res) => {
     if (req.method === 'GET') {
         try {
             const { slug } = req.query;
-            
+            console.log('slug', slug);
+
             const result = await Business.findById(slug).populate({
                 path: 'wallets.id',
                 match: { deleted: false },
-              });
+            });
+            console.log(result);
 
             return res.status(200).json({
                 success: true,

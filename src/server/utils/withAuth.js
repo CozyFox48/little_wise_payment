@@ -7,11 +7,12 @@ const withAuth = (handler) => {
         }
         const token = req.headers.authorization;
         jwt.verify(token.slice(7), process.env.JWT_SECRET, async (err, decoded) => {
-            
-            req.user=decoded.id;
+
             if (err) {
                 return res.status(401).send({ message: "Unauthorized!" });
             }
+            req.user = decoded.id;
+
 
             return handler(req, res);
         });
