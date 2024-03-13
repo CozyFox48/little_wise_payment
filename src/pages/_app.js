@@ -17,8 +17,7 @@ import ThemeComponent from 'src/@core/theme/ThemeComponent'
 
 // ** Contexts
 import { SettingsConsumer, SettingsProvider } from 'src/@core/context/settingsContext'
-
-// ** Utils Imports
+import { Toaster } from 'react-hot-toast'
 import { createEmotionCache } from 'src/@core/utils/create-emotion-cache'
 
 // ** React Perfect Scrollbar Style
@@ -62,9 +61,14 @@ const App = props => {
         <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       <AuthProvider>
         <SettingsProvider>
           <SettingsConsumer>
+
             {/* {
                 (auth) => auth.isLoading
                   ? <SplashScreen />

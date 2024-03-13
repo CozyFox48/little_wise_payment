@@ -40,6 +40,10 @@ class Service {
     createMember(data, business_id) {
         return api.put(`/api/business/members/${business_id}`, { data });
     }
+
+    deleteMember(data, business_id) {
+        return api.delete(`/api/business/members/${business_id}`, { data });
+    }
 }
 
 export default new Service();

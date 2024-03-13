@@ -9,7 +9,6 @@ const handler = async (req, res) => {
             const { slug } = req.query;
 
             const result = await Business.findById(slug).populate('members.id');
-            console.log(result);
 
             return res.status(200).json({
                 success: true,
@@ -17,6 +16,33 @@ const handler = async (req, res) => {
             });
 
         } catch (e) {
+            return res.status(404).json({
+                success: false,
+                message: e.message
+            });
+        }
+
+    } else if (req.method === 'DELETE') {
+        try {
+            const { slug } = req.query;
+
+            const result = await Business.findById(slug).populate('members.id');
+            const members = result.members;
+            let _members = [];
+            for (let member of members) {
+                if (member.id._id.toString() != req.body.id.toString())
+                    _members.push({ id: member.id._id, role: member.role, salary: member.salary, date: member.date });
+            }
+
+            const result1 = await Business.findByIdAndUpdate(slug, { $set: { members: _members } });
+
+            return res.status(200).json({
+                success: true,
+                data: result1.members
+            });
+
+        } catch (e) {
+
             return res.status(404).json({
                 success: false,
                 message: e.message

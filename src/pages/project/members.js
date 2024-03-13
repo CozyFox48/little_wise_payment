@@ -15,6 +15,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
+import toast from 'react-hot-toast';
 
 // ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
@@ -66,9 +67,20 @@ const Dashboard = () => {
         Request.createMember(requestBody, settings.selectedProject).then((response) => {
             setOpen(false);
             setData(response.data.data);
-
+            toast.success('Memeber created successfully.');
         }).catch(error => {
-            console.log(error.response)
+            console.log(error.response);
+            toast.error('Failed to create new member.');
+        });
+    }
+
+    const deleteMember = (member_id) => {
+        Request.deleteMember({ id: member_id }, settings.selectedProject).then((response) => {
+            toast.success('Member Deleted Successfully');
+            setData(response.data.data);
+        }).catch(error => {
+            console.log(error.response.message);
+            toast.error('Failed to delete.');
         });
     }
 
@@ -145,6 +157,7 @@ const Dashboard = () => {
                                             <TableCell>
                                                 <Chip
                                                     label={"Delete"}
+                                                    onClick={() => deleteMember(row?.id?._id)}
                                                     color={"error"}
                                                     sx={{
                                                         height: 24,
