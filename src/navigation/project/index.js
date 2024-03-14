@@ -26,9 +26,7 @@ const navigation = () => {
     {
       title: 'Customers',
       icon: AccountGroup,
-      path: '/pages/customers',
-      
-      // openInNewTab: true
+      path: '/project/customers',
     }
   ]
 }

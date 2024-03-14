@@ -9,19 +9,12 @@ import { styled, useTheme } from '@mui/material/styles'
 const TriangleImg = styled('img')({
   right: 0,
   bottom: 0,
-  height: 170,
+  height: 670,
   position: 'absolute'
 })
 
-// Styled component for the trophy image
-const TrophyImg = styled('img')({
-  right: 36,
-  bottom: 20,
-  height: 98,
-  position: 'absolute'
-})
 
-const Trophy = ({data}) => {
+const Trophy = ({ data }) => {
   // ** Hook
   const theme = useTheme()
   const imageSrc = theme.palette.mode === 'light' ? 'triangle-light.png' : 'triangle-dark.png'
@@ -29,18 +22,14 @@ const Trophy = ({data}) => {
   return (
     <Card sx={{ position: 'relative' }}>
       <CardContent>
-        <Typography variant='h3'>{data?.title}</Typography>
-        <Typography variant='h5' sx={{ my: 2, letterSpacing: '0.25px' }}>
+        <Typography variant='h4'>{data?.title}</Typography>
+        <Typography variant='h6' sx={{ my: 1, letterSpacing: '0.25px' }}>
           {data?.description}
         </Typography>
-        <Typography variant='h5' sx={{ my: 2, color: 'primary.main' }}>
+        <Typography variant='h6' sx={{ my: 1, color: 'primary.main' }}>
           Owner : {data?.owner?.username}
         </Typography>
-        {/* <Button size='small' variant='contained'>
-          View Sales
-        </Button> */}
         <TriangleImg alt='triangle background' src={`/images/misc/${imageSrc}`} />
-        {/* <TrophyImg alt='trophy' src='/images/misc/trophy.png' /> */}
       </CardContent>
     </Card>
   )

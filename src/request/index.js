@@ -44,6 +44,22 @@ class Service {
     deleteMember(data, business_id) {
         return api.delete(`/api/business/members/${business_id}`, { data });
     }
+
+    getCustomer(business_id) {
+        return api.get(`/api/business/customers/${business_id}`);
+    }
+
+    createCustomer(data, business_id) {
+        return api.put(`/api/business/customers/${business_id}`, { data });
+    }
+
+    deleteCustomer(data, business_id) {
+        return api.delete(`/api/business/customers/${business_id}`, { data });
+    }
+
+    createInvoice(data) {
+        return api.post(`/api/invoice`, { data });
+    }
 }
 
 export default new Service();

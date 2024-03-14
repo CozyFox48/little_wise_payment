@@ -8,11 +8,11 @@ const handler = async (req, res) => {
         try {
             const { slug } = req.query;
 
-            const result = await Business.findById(slug).populate('members.id');
+            const result = await Business.findById(slug).populate('customers');
 
             return res.status(200).json({
                 success: true,
-                data: result.members
+                data: result.customers
             });
 
         } catch (e) {
@@ -26,24 +26,19 @@ const handler = async (req, res) => {
         try {
             const { slug } = req.query;
 
-            const result = await Business.findById(slug).populate('members.id');
-            const members = result.members;
-            let _members = [];
-            for (let member of members) {
-                if (member.id._id.toString() != req.body.id.toString())
-                    _members.push({ id: member.id._id, role: member.role, salary: member.salary, date: member.date });
+            const result = await Business.findById(slug).populate('customers');
+            const customers = result.customers;
+            let _customers = [];
+            for (let customer of customers) {
+                if (customer._id.toString() != req.body.id.toString())
+                    _customers.push(customer._id);
             }
 
-            await Business.findByIdAndUpdate(slug, { $set: { members: _members } });
-
-            const result1 = await Business.findById(slug).populate({
-                path: 'members.id',
-                match: { deleted: false },
-            });
+            const result1 = await Business.findByIdAndUpdate(slug, { $set: { customers: _customers } });
 
             return res.status(200).json({
                 success: true,
-                data: result1.members
+                data: result1.customers
             });
 
         } catch (e) {
@@ -60,23 +55,15 @@ const handler = async (req, res) => {
             const user = await User.findOne({ email: req.body.data.email })
             await Business.findByIdAndUpdate(slug, {
                 $push: {
-                    members: {
-                        role: req.body.data.role,
-                        salary: req.body.data.salary,
-                        date: Date.now(),
-                        id: user._id
-                    }
+                    customers: user._id
                 }
             })
 
-            const result = await Business.findById(slug).populate('members.id');
-
-            console.log(result);
+            const result = await Business.findById(slug).populate('customers');
 
             return res.status(200).json({
                 success: true,
-
-                data: result.members
+                data: result.customers
             });
 
         } catch (e) {

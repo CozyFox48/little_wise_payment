@@ -61,10 +61,10 @@ const Dashboard = () => {
     return (
         <ApexChartWrapper>
             <Grid container spacing={6}>
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12}>
                     <Trophy data={data} />
                 </Grid>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12}>
                     <StatisticsCard data={data} />
                 </Grid>
                 <Grid item xs={12} md={6} lg={4}>
