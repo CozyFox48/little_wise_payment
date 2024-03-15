@@ -60,6 +60,10 @@ class Service {
     createInvoice(data) {
         return api.post(`/api/invoice`, { data });
     }
+
+    createTrans(data) {
+        return api.post(`/api/transfer`, { data });
+    }
 }
 
 export default new Service();

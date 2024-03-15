@@ -1,31 +1,59 @@
 
 import withAuth from "../../server/utils/withAuth";
-import Transaction from "../../server/model/wallet";
+import Transaction from "../../server/model/transactions";
 import User from "../../server/model/user";
+import dbConnect from "src/server/dbConnect";
+import Business from "src/server/model/business";
+import Wallet from "src/server/model/wallet";
 
 const handler = async (req, res) => {
+  await dbConnect();
   if (req.method === 'POST') {
     try {
+      let receiver = '';
+      if (req.body.data.type == 'user') {
+        const user = await User.findOne({ email: req.body.data.receiver });
+        receiver = user.wallet;
+      } else {
+        const business = await Business.findOne({ title: req.body.data.receiver });
+        const wallets = business.wallets;
+        for (const wallet of wallets) {
+          if (wallet.isDefault === true) receiver = wallet.id;
+        }
+        if (receiver === '') receiver = wallets[0].id;
+      }
+      console.log(receiver)
+      const transaction = await Transaction.create({ ...req.body.data, receiver: receiver, amount: Number(req.body.data.amount) });
+      const adding = Number(req.body.data.amount);
+      console.log(transaction)
 
-      const transaction = await Transaction.create({ ...req.body, amount: Number(req.body.amount) });
-      const adding=Number(req.body.amount);
-      const subtracting=Number(req.body.amount)*(-1);
+      let _sender = await Wallet.findById(req.body.data.sender);
+      _sender.transactions.push(transaction._id);
+      for (let i = 0; i < _sender.balance.length; i++) {
+        if (_sender.balance[i].currency === req.body.data.currency) _sender.balance[i].amount = _sender.balance[i].amount - adding;
+      }
+      await _sender.save();
 
-      await User.findOneAndUpdate({ bankNumber: req.body.sender }, { $push: { transaction: transaction._id }, $inc:{balance:subtracting} });
-      await User.findOneAndUpdate({ bankNumber: req.body.receiver }, { $push: { transaction: transaction._id }, $inc:{balance:adding} });
+      let _receiver = await Wallet.findById(receiver);
+      _receiver.transactions.push(transaction._id);
+      for (let i = 0; i < _receiver.balance.length; i++) {
+        if (_receiver.balance[i].currency === req.body.data.currency) _receiver.balance[i].amount = _receiver.balance[i].amount + adding;
+      }
+      await _receiver.save();
+
+      console.log(_sender, _receiver);
 
       return res.status(200).json({
         success: true
       });
     } catch (e) {
-      return res.status(200).json({
+      console.log(e.message);
+
+      return res.status(404).json({
         success: false,
         message: e.message
       });
     }
-
-  } else {
-    // Handle any other HTTP method
   }
 }
 

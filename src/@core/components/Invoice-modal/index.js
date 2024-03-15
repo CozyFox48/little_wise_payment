@@ -29,7 +29,7 @@ const style = {
 };
 
 const Dashboard = ({ children, destination }) => {
-    const { settings, saveSettings } = useSettings();
+    const { settings } = useSettings();
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -77,7 +77,7 @@ const Dashboard = ({ children, destination }) => {
                         </Grid>
                         <Grid item xs={12}>
                             <FormControl fullWidth>
-                                <InputLabel>Country</InputLabel>
+                                <InputLabel>Currency</InputLabel>
                                 <Select label='Currency' fullWidth value={requestBody.currency}
                                     onChange={(event) => { setRequestBody(prev => { return { ...prev, currency: event.target.value } }) }}>
                                     <MenuItem value='USD'>USD</MenuItem>

@@ -1,14 +1,8 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-  sender: {
-    type: String,
-    amount: number
-  },
-  receiver: {
-    type: String,
-    required: true,
-  },
+  sender: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+  receiver: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
   amount: {
     type: Number,
     required: true

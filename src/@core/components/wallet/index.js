@@ -16,10 +16,9 @@ import AccountOutline from 'mdi-material-ui/AccountOutline'
 import InformationOutline from 'mdi-material-ui/InformationOutline'
 
 // ** Demo Tabs Imports
-import TabInfo from 'src/views/account-settings/TabInfo'
-import TabAccount from 'src/@core/components/wallet/TabAccount'
-import TabSecurity from 'src/views/account-settings/TabSecurity'
-
+import WalletSend from 'src/@core/components/wallet/WalletSend'
+import TabAccount from 'src/@core/components/wallet/WalletAccount'
+import WalletTran from 'src/@core/components/wallet/WalletTran'
 import Request from "src/request";
 
 // ** Third Party Styles Imports
@@ -45,13 +44,20 @@ const TabName = styled('span')(({ theme }) => ({
 }))
 
 const AccountSettings = ({ id }) => {
-  
+
   const [value, setValue] = useState('account');
   const [data, setData] = useState({})
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+
+  const [requestBody, setRequestBody] = useState({
+    amount: 0,
+    type: 'user',
+    receiver: '',
+    currency: 'USD'
+  });
 
   const updateData = () => {
     Request.updateOneWallet(id, data).then(response => {
@@ -61,12 +67,15 @@ const AccountSettings = ({ id }) => {
     })
   }
 
-  useEffect(() => {
+  const getData = () => {
     Request.getOneWallet(id).then((response) => {
       setData(response.data.data);
     }).catch(error => {
       console.log(error.response)
     })
+  }
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
@@ -106,13 +115,13 @@ const AccountSettings = ({ id }) => {
           />
         </TabList>
         <TabPanel sx={{ p: 0 }} value='account'>
-          <TabAccount data={data} setData={setData} updateData={updateData}/>
+          <TabAccount data={data} setData={setData} updateData={updateData} />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='transaction'>
-          <TabSecurity />
+          <WalletTran />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='send'>
-          <TabInfo />
+          <WalletSend requestBody={requestBody} setRequestBody={setRequestBody} data={data} getData={getData} />
         </TabPanel>
       </TabContext>
     </Card>
