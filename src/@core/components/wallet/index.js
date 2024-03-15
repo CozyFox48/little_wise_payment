@@ -11,9 +11,8 @@ import { styled } from '@mui/material/styles'
 import MuiTab from '@mui/material/Tab'
 
 // ** Icons Imports
-import { Sync } from 'mdi-material-ui'
+import { Sync, Send, SwapHorizontal } from 'mdi-material-ui'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
-import InformationOutline from 'mdi-material-ui/InformationOutline'
 
 // ** Demo Tabs Imports
 import WalletSend from 'src/@core/components/wallet/WalletSend'
@@ -99,7 +98,7 @@ const AccountSettings = ({ id }) => {
             value='transaction'
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Sync />
+                <SwapHorizontal />
                 <TabName>Transaction</TabName>
               </Box>
             }
@@ -108,7 +107,7 @@ const AccountSettings = ({ id }) => {
             value='send'
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <InformationOutline />
+                <Send />
                 <TabName>Send</TabName>
               </Box>
             }
@@ -118,7 +117,7 @@ const AccountSettings = ({ id }) => {
           <TabAccount data={data} setData={setData} updateData={updateData} />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='transaction'>
-          <WalletTran />
+          <WalletTran data={data} />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='send'>
           <WalletSend requestBody={requestBody} setRequestBody={setRequestBody} data={data} getData={getData} />

@@ -11,17 +11,17 @@ const UserSchema = new mongoose.Schema({
       default: 0
     }
   }],
-  nickname:String,
-  deleted:{
-    type:Boolean,
-    default:false
+  nickname: String,
+  deleted: {
+    type: Boolean,
+    default: false
   },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
-  business:{ type: mongoose.Schema.Types.ObjectId, ref: 'business' },
+  business: { type: mongoose.Schema.Types.ObjectId, ref: 'business' },
   transactions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'transaction' }],
   pendings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'pending' }],
   contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'wallet' }],
-  invoices:[{ type: mongoose.Schema.Types.ObjectId, ref: 'invoice' }]
+  invoices: [{ type: mongoose.Schema.Types.ObjectId, ref: 'invoice' }]
 });
 
 module.exports = mongoose.models.wallet || mongoose.model('wallet', UserSchema);

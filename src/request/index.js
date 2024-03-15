@@ -64,6 +64,10 @@ class Service {
     createTrans(data) {
         return api.post(`/api/transfer`, { data });
     }
+
+    getTrans(wallet_id) {
+        return api.get(`/api/transfer/${wallet_id}`);
+    }
 }
 
 export default new Service();

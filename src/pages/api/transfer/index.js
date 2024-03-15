@@ -1,7 +1,7 @@
 
-import withAuth from "../../server/utils/withAuth";
-import Transaction from "../../server/model/transactions";
-import User from "../../server/model/user";
+import withAuth from "src/server/utils/withAuth";
+import Transaction from "src/server/model/transactions";
+import User from "src/server/model/user";
 import dbConnect from "src/server/dbConnect";
 import Business from "src/server/model/business";
 import Wallet from "src/server/model/wallet";
@@ -22,10 +22,9 @@ const handler = async (req, res) => {
         }
         if (receiver === '') receiver = wallets[0].id;
       }
-      console.log(receiver)
+
       const transaction = await Transaction.create({ ...req.body.data, receiver: receiver, amount: Number(req.body.data.amount) });
       const adding = Number(req.body.data.amount);
-      console.log(transaction)
 
       let _sender = await Wallet.findById(req.body.data.sender);
       _sender.transactions.push(transaction._id);
@@ -40,8 +39,6 @@ const handler = async (req, res) => {
         if (_receiver.balance[i].currency === req.body.data.currency) _receiver.balance[i].amount = _receiver.balance[i].amount + adding;
       }
       await _receiver.save();
-
-      console.log(_sender, _receiver);
 
       return res.status(200).json({
         success: true

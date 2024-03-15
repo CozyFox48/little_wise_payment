@@ -9,19 +9,17 @@ const handler = async (req, res) => {
 
     if (req.method === 'PUT') {
         try {
-            console.log(req.body.data);
-
             const wallet = await Wallet.create({
                 balance: [{ currency: 'USD', amount: 0 }, { currency: 'EUR', amount: 0 }, { currency: 'GBP', amount: 0 }],
                 nickname: req.body.data.nickname,
                 deleted: false,
                 business: req.body.data.business_id
             });
-            await Business.findByIdAndUpdate(req.body.data.business_id,{
-                $push:{
-                    wallets:{
-                        id:wallet._id,
-                        isDefault:false
+            await Business.findByIdAndUpdate(req.body.data.business_id, {
+                $push: {
+                    wallets: {
+                        id: wallet._id,
+                        isDefault: false
                     }
                 }
             });
@@ -29,7 +27,7 @@ const handler = async (req, res) => {
             const result = await Business.findById(req.body.data.business_id).populate({
                 path: 'wallets.id',
                 match: { deleted: false },
-              });
+            });
 
             return res.status(200).json({
                 success: true,

@@ -25,17 +25,17 @@ module.exports = {
     'import/no-anonymous-default-export': 'off',
 
     // add new line above comment
-    'lines-around-comment': [
-      'error',
-      {
-        beforeLineComment: true,
-        beforeBlockComment: true,
-        allowBlockStart: true,
-        allowClassStart: true,
-        allowObjectStart: true,
-        allowArrayStart: true
-      }
-    ],
+    // 'lines-around-comment': [
+    //   'error',
+    //   {
+    //     beforeLineComment: true,
+    //     beforeBlockComment: true,
+    //     allowBlockStart: true,
+    //     allowClassStart: true,
+    //     allowObjectStart: true,
+    //     allowArrayStart: true
+    //   }
+    // ],
 
     // add new line above return
     'newline-before-return': 'error',
