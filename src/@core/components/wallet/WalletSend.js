@@ -18,19 +18,31 @@ const TabInfo = ({ requestBody, setRequestBody, data, getData }) => {
   const { settings } = useSettings();
 
   const sendMoney = () => {
-    if (requestBody.amount === 0) {
-      toast.error(`Amount can't be 0.`)
-    } else if (requestBody.receiver === '') {
-      toast.error(`Please input receiver's name.`)
-    } else {
-      Request.createTrans({ ...requestBody, business: settings.selectedProject, sender: data._id }).then((response) => {
-        toast.success('Sent money successfully.');
-        getData();
-      }).catch(error => {
-        console.log(error.response);
-        toast.error('Failed to send money.');
-      });
+    let flag = false;
+
+    data.balance.forEach(each => {
+      if (each.currency === requestBody.currency && requestBody.amount > each.amount) {
+        toast.error('The balance has been exceeded.');
+        flag = true;
+      }
+    })
+
+    if (!flag) {
+      if (requestBody.amount <= 0) {
+        toast.error(`Amount can't be 0 or less than 0.`)
+      } else if (requestBody.receiver === '') {
+        toast.error(`Please input receiver's name.`)
+      } else {
+        Request.createTrans({ ...requestBody, business: settings.selectedProject, sender: data._id }).then((response) => {
+          toast.success('Sent money successfully.');
+          getData();
+        }).catch(error => {
+          console.log(error.response);
+          toast.error('Failed to send money.');
+        });
+      }
     }
+
   }
 
   return (
