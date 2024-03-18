@@ -1,20 +1,28 @@
 import withAuth from "src/server/utils/withAuth";
 import Wallet from "src/server/model/wallet";
+import Invoice from "src/server/model/invoices";
 import dbConnect from "src/server/dbConnect";
-import transactions from "src/server/model/transactions";
 
 const handler = async (req, res) => {
     await dbConnect();
     if (req.method === 'GET') {
         try {
             const { slug } = req.query;
-            const result = await Wallet.findById(slug).populate('transactions');
+            const result = await Wallet.findById(slug).populate('invoices');
 
             let response_result = [];
-            for (let each_transaction of result.transactions) {
-                let each_result = { sender: each_transaction.sender, receiver: each_transaction.receiver, amount: each_transaction.amount, currency: each_transaction.currency };
-                if (each_transaction.sender.toString() !== slug.toString()) {
-                    const other_wallet = await Wallet.findById(each_transaction.sender).populate('business').populate('owner');
+            for (let each_invoice of result.invoices) {
+                let each_result = {
+                    sender: each_invoice.sender,
+                    receiver: each_invoice.receiver,
+                    amount: each_invoice.amount,
+                    currency: each_invoice.currency,
+                    description: each_invoice.description,
+                    payment: each_invoice.payment
+                };
+                if (each_invoice.sender.toString() !== slug.toString()) {
+                    const other_wallet = await Wallet.findById(each_invoice.sender).populate('business').populate('owner');
+                    each_result.opponent = each_result.sender;
                     if (other_wallet.owner) {
                         each_result.sender = other_wallet.owner.username;
                         each_result.desc = other_wallet.owner.email;
@@ -25,8 +33,8 @@ const handler = async (req, res) => {
                         each_result.type = 'Business';
                     }
                 }
-                if (each_transaction.receiver.toString() !== slug.toString()) {
-                    const other_wallet = await Wallet.findById(each_transaction.receiver).populate('business').populate('owner');
+                if (each_invoice.receiver.toString() !== slug.toString()) {
+                    const other_wallet = await Wallet.findById(each_invoice.receiver).populate('business').populate('owner');
                     if (other_wallet.owner) {
                         each_result.receiver = other_wallet.owner.username;
                         each_result.desc = other_wallet.owner.email;

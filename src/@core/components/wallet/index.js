@@ -11,13 +11,14 @@ import { styled } from '@mui/material/styles'
 import MuiTab from '@mui/material/Tab'
 
 // ** Icons Imports
-import { Sync, Send, SwapHorizontal } from 'mdi-material-ui'
+import { Send, SwapHorizontal, Invoice } from 'mdi-material-ui'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 
 // ** Demo Tabs Imports
 import WalletSend from 'src/@core/components/wallet/WalletSend'
 import TabAccount from 'src/@core/components/wallet/WalletAccount'
 import WalletTran from 'src/@core/components/wallet/WalletTran'
+import WalletInvoice from 'src/@core/components/wallet/WalletInvoice'
 import Request from "src/request";
 
 // ** Third Party Styles Imports
@@ -46,10 +47,8 @@ const AccountSettings = ({ id }) => {
 
   const [value, setValue] = useState('account');
   const [data, setData] = useState({})
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
+  const [transactions, setTransactions] = useState([]);
+  const [invoices, setInvoices] = useState([]);
 
   const [requestBody, setRequestBody] = useState({
     amount: 0,
@@ -57,6 +56,31 @@ const AccountSettings = ({ id }) => {
     receiver: '',
     currency: 'USD'
   });
+
+  useEffect(() => {
+    if (data._id) {
+      Request.getTrans(data._id).then(response => {
+        setTransactions(response.data.data)
+      }).catch(error => {
+        console.log(error.response)
+      });
+    }
+
+  }, [data]);
+
+  useEffect(() => {
+    if (data._id) {
+      Request.getInvoices(data._id).then(response => {
+        setInvoices(response.data.data)
+      }).catch(error => {
+        console.log(error.response)
+      });
+    }
+  }, [data]);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
 
   const updateData = () => {
     Request.updateOneWallet(id, data).then(response => {
@@ -104,6 +128,15 @@ const AccountSettings = ({ id }) => {
             }
           />
           <Tab
+            value='invoice'
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Invoice />
+                <TabName>Invoices</TabName>
+              </Box>
+            }
+          />
+          <Tab
             value='send'
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -117,7 +150,10 @@ const AccountSettings = ({ id }) => {
           <TabAccount data={data} setData={setData} updateData={updateData} />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='transaction'>
-          <WalletTran data={data} />
+          <WalletTran transactions={transactions} data={data} />
+        </TabPanel>
+        <TabPanel sx={{ p: 0 }} value='invoice'>
+          <WalletInvoice invoices={invoices} data={data} setValue={setValue} setRequestBody={setRequestBody} />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='send'>
           <WalletSend requestBody={requestBody} setRequestBody={setRequestBody} data={data} getData={getData} />

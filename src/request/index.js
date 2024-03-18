@@ -68,6 +68,10 @@ class Service {
     getTrans(wallet_id) {
         return api.get(`/api/transfer/${wallet_id}`);
     }
+
+    getInvoices(wallet_id) {
+        return api.get(`/api/invoice/${wallet_id}`);
+    }
 }
 
 export default new Service();

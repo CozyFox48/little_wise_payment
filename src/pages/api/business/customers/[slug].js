@@ -1,9 +1,10 @@
 import withAuth from "src/server/utils/withAuth";
-import Wallet from "src/server/model/wallet";
 import Business from "src/server/model/business";
 import User from "src/server/model/user";
+import dbConnect from "src/server/dbConnect";
 
 const handler = async (req, res) => {
+    await dbConnect();
     if (req.method === 'GET') {
         try {
             const { slug } = req.query;

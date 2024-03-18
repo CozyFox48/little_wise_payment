@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 
 // ** Icons Imports
 import { useSettings } from 'src/@core/hooks/useSettings';
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Chip from '@mui/material/Chip'
 import Table from '@mui/material/Table'
