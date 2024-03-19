@@ -92,6 +92,14 @@ class Service {
     publishProduct(product_id, data) {
         return api.post(`/api/product/publish/${product_id}`, { data });
     }
+
+    createPrice4Product(product_id, data) {
+        return api.post(`/api/product/price/${product_id}`, { data });
+    }
+
+    deletePrice4Product(product_id, data) {
+        return api.delete(`/api/product/price/${product_id}`, { data });
+    }
 }
 
 export default new Service();

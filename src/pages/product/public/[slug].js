@@ -122,7 +122,7 @@ const Dashboard = () => {
     }
 
     const navigate2public = () => {
-        router.push('/product/public/' + slug, undefined, { target: '_blank' })
+
     }
 
     return (
