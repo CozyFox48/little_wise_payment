@@ -126,9 +126,6 @@ const Dashboard = () => {
                     <DepositWithdraw />
                 </Grid>
                 <Grid item xs={12}>
-                    <Table />
-                </Grid>
-                <Grid item xs={12}>
                     <Card>
                         <CardHeader
                             title='Delete Project'

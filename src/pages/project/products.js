@@ -156,7 +156,7 @@ const Dashboard = () => {
 
             <Grid container spacing={6}>
                 <Grid item xs={12}>
-                    <Typography variant='h4'>All Wallets</Typography>
+                    <Typography variant='h4'>All Products</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <Button variant='contained' onClick={handleOpen}>

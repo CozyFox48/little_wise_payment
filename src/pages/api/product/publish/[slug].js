@@ -8,22 +8,13 @@ const handler = async (req, res) => {
     if (req.method === 'POST') {
         try {
             const { slug } = req.query;
-            let requestBody = req.body.data;
-            console.log(slug, requestBody)
-
-            const new_product = await Product.create({
-                ...requestBody,
-                business: slug,
-                published: false
-            });
-
-            await business.findByIdAndUpdate(slug, { $push: { products: new_product._id } });
-
-            const response_result = await business.findById(slug).populate('products');
+            const requestBody = req.body.data;
+            await Product.findByIdAndUpdate(slug, { $set: requestBody });
+            const _product = await Product.findById(slug).populate('business');
 
             return res.status(200).json({
                 success: true,
-                data: response_result.products
+                data: _product
             });
 
         } catch (e) {
