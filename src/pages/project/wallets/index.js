@@ -36,7 +36,7 @@ const style = {
 };
 
 const Dashboard = () => {
-    const { settings, saveSettings } = useSettings();
+    const { settings } = useSettings();
     const [data, setData] = useState([])
 
     const handleOpen = () => setOpen(true);
@@ -103,6 +103,8 @@ const Dashboard = () => {
                             icon={<WalletOutline />}
                             color={each.isDefault ? 'success' : ''}
                             subtitle={`Pendings : ${each.id.pendings.length}`}
+                            topLetter={each.isDefault ? 'Default' : ''}
+                            toUrl={'/project/wallets/' + each.id._id}
                         />
 
                     </Grid>

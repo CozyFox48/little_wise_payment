@@ -21,7 +21,7 @@ const navigation = () => {
     {
       title: 'Products',
       icon: CellphoneLink,
-      path: '/pages/products'
+      path: '/project/products'
     },
     {
       title: 'Customers',

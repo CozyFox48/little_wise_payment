@@ -72,6 +72,14 @@ class Service {
     getInvoices(wallet_id) {
         return api.get(`/api/invoice/${wallet_id}`);
     }
+
+    createProduct(business_id, data) {
+        return api.post(`/api/product/${business_id}`, { data });
+    }
+
+    get4OneBusiness(business_id) {
+        return api.get(`/api/product/get4OneBusiness/${business_id}`);
+    }
 }
 
 export default new Service();
