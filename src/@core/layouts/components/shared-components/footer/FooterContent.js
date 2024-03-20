@@ -16,7 +16,7 @@ const FooterContent = () => {
           ❤️
         </Box>
         {` by `}
-        <Link target='_blank' href='https://themeselection.com/'>
+        <Link target='_blank' href='https://netlinksdn.com/'>
           NetlinkSDN
         </Link>
       </Typography>
@@ -33,13 +33,13 @@ const FooterContent = () => {
           </Link> */}
           <Link
             target='_blank'
-            href='https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free/blob/main/README.md'
+            href='https://netlinksdn.com/'
           >
             Documentation
           </Link>
           <Link
             target='_blank'
-            href='https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free/issues'
+            href='https://netlinksdn.com/'
           >
             Support
           </Link>
