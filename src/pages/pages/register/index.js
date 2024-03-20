@@ -32,6 +32,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
+import toast from 'react-hot-toast';
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -55,11 +56,11 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 
 const RegisterPage = () => {
   // ** States
-  
+
 
   const [values, setValues] = useState({
-    username:'',
-    email:'',
+    username: '',
+    email: '',
     password_confirm: '',
     password: '',
     showPassword: false
@@ -74,10 +75,15 @@ const RegisterPage = () => {
     setValues({ ...values, [prop]: event.target.value })
   }
 
-  const onSubmit=()=>{
-    auth.signUp(values.username, values.email, values.password).then(()=>{
-      router.push('/pages/login');
-    });
+  const onSubmit = () => {
+    if (values.password !== values.password_confirm) {
+      toast.error('Passwords do not match.')
+    } else {
+      auth.signUp(values.username, values.email, values.password).then(() => {
+        router.push('/pages/login');
+        toast.success('You registered new user successfully.')
+      });
+    }
   }
 
   const handleClickShowPassword = () => {
@@ -168,9 +174,9 @@ const RegisterPage = () => {
             <Typography variant='body2'>Make your app payment easy and fun!</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <TextField autoFocus fullWidth id='username' label='Username' sx={{ marginBottom: 4 }} value={values.username} onChange={handleChange('username')}/>
+            <TextField autoFocus fullWidth id='username' label='Username' sx={{ marginBottom: 4 }} value={values.username} onChange={handleChange('username')} />
             <TextField fullWidth type='email' label='Email' sx={{ marginBottom: 4 }} value={values.email} onChange={handleChange('email')} />
-            <FormControl fullWidth  sx={{ marginBottom: 4 }}>
+            <FormControl fullWidth sx={{ marginBottom: 4 }}>
               <InputLabel htmlFor='auth-register-password'>Password</InputLabel>
               <OutlinedInput
                 label='Password'
@@ -223,7 +229,7 @@ const RegisterPage = () => {
                 </Fragment>
               }
             />
-            <Button fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7 }} onClick={()=>onSubmit()}>
+            <Button fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7 }} onClick={() => onSubmit()}>
               Sign up
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>

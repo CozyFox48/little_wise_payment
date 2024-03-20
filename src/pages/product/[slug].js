@@ -242,7 +242,7 @@ const Dashboard = () => {
                             </Button>
                         </Box>
                         <TableContainer>
-                            <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
+                            <Table sx={{ minWidth: 800, m: 3 }} aria-label='table in dashboard'>
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Name</TableCell>

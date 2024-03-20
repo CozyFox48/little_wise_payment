@@ -9,15 +9,12 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import { styled, useTheme } from '@mui/material/styles'
 import Request from "src/request";
-import { useAuthContext } from 'src/@core/context/auth-context';
 import TextField from '@mui/material/TextField'
 import { useSettings } from 'src/@core/hooks/useSettings';
 import { useRouter } from 'next/router';
-
-// ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
+import toast from 'react-hot-toast';
 
-// Styled component for the triangle shaped background image
 const TriangleImg = styled('img')({
   right: 0,
   bottom: 0,
@@ -39,8 +36,7 @@ const style = {
 };
 
 const Dashboard = () => {
-  const { user } = useAuthContext();
-  const { settings, saveSettings } = useSettings();
+  const { saveSettings } = useSettings();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({ title: '', description: '' })
   const [businesses, setBussinesses] = useState([]);
@@ -54,7 +50,8 @@ const Dashboard = () => {
     Request.getBusiness().then((response) => {
       setBussinesses(response.data.data)
     }).catch(error => {
-      console.log(error.response)
+      console.log(error.response.data.message)
+      toast.error('Fetching businesses failed.')
     });
   }
 
@@ -66,16 +63,21 @@ const Dashboard = () => {
     Request.createBusiness(data).then((response) => {
       setOpen(false);
       setBussinesses(response.data.data);
+      toast.success('You created business successfully.')
     }).catch(error => {
-      console.log(error.response)
+      if (error.response.data.message.includes('duplicate')) {
+        toast.error('Error, duplicated business name.')
+      } else {
+        toast.error('Creating new business failed.')
+      }
     });
   }
 
-  const navigate=(each)=>{
-    saveSettings(prev=>{
+  const navigate = (each) => {
+    saveSettings(prev => {
       return {
         ...prev,
-        selectedProject:each._id
+        selectedProject: each._id
       }
     });
     router.push('/project/overview');
@@ -120,16 +122,16 @@ const Dashboard = () => {
         </Grid>
         {businesses.map((each, key) =>
           <Grid item xs={12} md={4} key={key}>
-            <Card sx={{ position: 'relative' }}>
+            <Card sx={{ position: 'relative', height: '200px' }}>
               <CardContent>
-                <Typography variant='h6'>{each.title}</Typography>
-                <Typography variant='body2' sx={{ letterSpacing: '0.25px' }}>
+                <Typography variant='h6' sx={{ overflow: "hidden", textOverflow: "ellipsis" }}>{each.title}</Typography>
+                <Typography variant='body2' sx={{ letterSpacing: '0.25px', overflow: "hidden", textOverflow: "ellipsis" }}>
                   {each.description}
                 </Typography>
                 <Typography variant='h5' sx={{ my: 4, color: 'primary.main' }}>
                   Products : {each.products.length}
                 </Typography>
-                <Button size='small' variant='contained' onClick={()=>{
+                <Button size='small' variant='contained' onClick={() => {
                   navigate(each);
                 }}>
                   View Detail

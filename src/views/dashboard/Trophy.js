@@ -23,7 +23,7 @@ const Trophy = ({ data }) => {
     <Card sx={{ position: 'relative' }}>
       <CardContent>
         <Typography variant='h4'>{data?.title}</Typography>
-        <Typography variant='h6' sx={{ my: 1, letterSpacing: '0.25px' }}>
+        <Typography variant='h6' sx={{ my: 1, letterSpacing: '0.25px', textWrap: 'nowrap', wordBreak: 'break-all', whiteSpace: 'break-spaces' }}>
           {data?.description}
         </Typography>
         <Typography variant='h6' sx={{ my: 1, color: 'primary.main' }}>

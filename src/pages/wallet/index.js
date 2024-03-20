@@ -1,4 +1,4 @@
-import { useAuthContext } from '../../@core/context/auth-context';
+import { useAuthContext } from 'src/@core/context/auth-context';
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
@@ -9,7 +9,7 @@ const AccountSettings = () => {
   const { user } = useAuthContext();
 
   return (
-   <Wallet id={user.wallet}></Wallet>
+    <Wallet id={user.wallet}></Wallet>
   )
 }
 

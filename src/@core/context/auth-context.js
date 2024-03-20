@@ -159,6 +159,6 @@ AuthProvider.propTypes = {
     children: PropTypes.node
 };
 
-export const AuthConsumer = AuthContext.Consumer;
+export const AuthConsumer = AuthContext.Consum
 
 export const useAuthContext = () => useContext(AuthContext);

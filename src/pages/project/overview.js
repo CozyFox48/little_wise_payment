@@ -1,22 +1,13 @@
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import { useState, useEffect } from 'react';
-
-// ** Icons Imports
 import Poll from 'mdi-material-ui/Poll'
 import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
 import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
 import BriefcaseVariantOutline from 'mdi-material-ui/BriefcaseVariantOutline'
 import { useSettings } from 'src/@core/hooks/useSettings';
-
-// ** Custom Components Imports
 import CardStatisticsVerticalComponent from 'src/@core/components/card-statistics/card-stats-vertical'
-
-// ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
-
-// ** Demo Components Imports
-import Table from 'src/views/dashboard/Table'
 import Trophy from 'src/views/dashboard/Trophy'
 import TotalEarning from 'src/views/dashboard/TotalEarning'
 import StatisticsCard from 'src/views/dashboard/StatisticsCard'
@@ -25,16 +16,14 @@ import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 import Request from 'src/request';
 import ProjectLayout from "src/layouts/ProjectLayout";
-
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
-import { useTheme } from '@mui/material/styles'
 import CardHeader from '@mui/material/CardHeader'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 const Dashboard = () => {
     const { settings, saveSettings } = useSettings();
@@ -44,7 +33,7 @@ const Dashboard = () => {
     useEffect(() => {
         console.log(settings.selectedProject);
         Request.getOneBusiness(settings.selectedProject).then((response) => {
-            setData(response.data.data)
+            setData(response.data.data);
         }).catch(error => {
             console.log(error.response)
         });
@@ -52,8 +41,10 @@ const Dashboard = () => {
 
     const deleteBusiness = () => {
         Request.deleteOneBusiness(settings.selectedProject).then((response) => {
+            toast.success('You deleted business successfully.')
             router.push('/');
         }).catch(error => {
+            toast.error('Deleting business failed.')
             console.log(error.response)
         });
     }

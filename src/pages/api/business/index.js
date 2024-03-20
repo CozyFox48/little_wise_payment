@@ -9,15 +9,15 @@ const handler = async (req, res) => {
 
   if (req.method === 'PUT') {
     try {
-      const business = await Business.create({ ...req.body.data, owner: req.user, deleted:false });
+      const business = await Business.create({ ...req.body.data, owner: req.user, deleted: false });
       const user = await User.findById(req.user);
       user.business.push(business._id);
       await user.save();
 
       const wallet = await Wallet.create({
         business: business._id,
-        deleted:false,
-        nickname:'Default',
+        deleted: false,
+        nickname: 'Default',
         balance: [{ currency: 'USD', amount: 0 }, { currency: 'EUR', amount: 0 }, { currency: 'GBP', amount: 0 }]
       });
 
@@ -65,8 +65,6 @@ const handler = async (req, res) => {
         message: e.message
       });
     }
-  } else {
-
   }
 }
 
