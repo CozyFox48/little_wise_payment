@@ -27,7 +27,7 @@ import TextField from '@mui/material/TextField'
 
 const style = {
     position: 'absolute',
-    top: '30%',
+    top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 600,
@@ -73,6 +73,7 @@ const Dashboard = () => {
         Request.deleteCustomer({ id: member_id }, settings.selectedProject).then((response) => {
             toast.success('Selected Customer Deleted Successfully');
             setData(response.data.data);
+            console.log(response.data.data)
         }).catch(error => {
             console.log(error.response.message);
             toast.error('Failed to delete.');

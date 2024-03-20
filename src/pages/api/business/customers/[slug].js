@@ -35,7 +35,8 @@ const handler = async (req, res) => {
                     _customers.push(customer._id);
             }
 
-            const result1 = await Business.findByIdAndUpdate(slug, { $set: { customers: _customers } });
+            await Business.findByIdAndUpdate(slug, { $set: { customers: _customers } });
+            const result1 = await Business.findById(slug).populate('customers');
 
             return res.status(200).json({
                 success: true,

@@ -71,6 +71,7 @@ const AccountSettings = ({ id }) => {
   useEffect(() => {
     if (data._id) {
       Request.getInvoices(data._id).then(response => {
+        console.log(response.data.data)
         setInvoices(response.data.data)
       }).catch(error => {
         console.log(error.response)

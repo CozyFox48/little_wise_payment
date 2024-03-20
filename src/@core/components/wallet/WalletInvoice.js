@@ -18,7 +18,7 @@ const TabSecurity = ({ invoices, data, setValue, setRequestBody }) => {
     setRequestBody({
       amount: row.amount,
       type: row.type.toLowerCase(),
-      receiver: row.opponent,
+      receiver: row.sender,
       currency: row.currency
     });
     setValue('send');
