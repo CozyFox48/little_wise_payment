@@ -8,7 +8,6 @@ const handler = async (req, res) => {
     if (req.method === 'GET') {
         try {
             const { slug } = req.query;
-            console.log(slug);
             const _product = await Product.findById(slug).populate('business');
 
             return res.status(200).json({

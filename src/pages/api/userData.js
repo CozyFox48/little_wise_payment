@@ -14,8 +14,7 @@ const handler = async (req, res) => {
             username: user.username
         });
     } else if (req.method === 'POST') {
-        console.log(req.query.userID, req.body);
-        const user = await User.findByIdAndUpdate(req.query.userID, req.body);
+        await User.findByIdAndUpdate(req.query.userID, req.body);
 
         return res.status(200).json({
             success: true

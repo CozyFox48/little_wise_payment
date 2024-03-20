@@ -8,10 +8,8 @@ const handler = async (req, res) => {
     if (req.method === 'POST') {
         try {
             const requestBody = req.body.data;
-            console.log(requestBody)
             const adding = Number(req.body.data.amount);
             let _sender = await Wallet.findById(requestBody.sender);
-            console.log(_sender);
 
             let flag = true;
             for (let i = 0; i < _sender.balance.length; i++) {
@@ -33,7 +31,6 @@ const handler = async (req, res) => {
                 await _sender.save();
 
                 let _receiver = await Wallet.findById(requestBody.receiver);
-                console.log(_receiver)
                 _receiver.transactions.push(transaction._id);
                 for (let i = 0; i < _receiver.balance.length; i++) {
                     if (_receiver.balance[i].currency === requestBody.currency) _receiver.balance[i].amount = _receiver.balance[i].amount + adding;

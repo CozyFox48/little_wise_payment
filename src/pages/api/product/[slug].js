@@ -9,7 +9,6 @@ const handler = async (req, res) => {
         try {
             const { slug } = req.query;
             let requestBody = req.body.data;
-            console.log(slug, requestBody)
 
             const new_product = await Product.create({
                 ...requestBody,
