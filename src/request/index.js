@@ -104,6 +104,10 @@ class Service {
     purchaseProduct(data) {
         return api.post(`/api/product/purchase`, { data });
     }
+
+    getProduct4Public(product_id) {
+        return api.get(`/api/product/publicOne/${product_id}`);
+    }
 }
 
 export default new Service();

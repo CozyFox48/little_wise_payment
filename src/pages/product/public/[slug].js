@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 import Table from '@mui/material/Table'
 import Request from 'src/request';
-import DashboardLayout from "src/layouts/DashboardLayout";
+import PublicLayout from "src/layouts/PublicLayout";
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
@@ -55,7 +55,7 @@ const Dashboard = () => {
     const { user } = useAuthContext();
 
     useEffect(() => {
-        Request.getProduct(slug).then((response) => {
+        Request.getProduct4Public(slug).then((response) => {
             setData(response.data.data)
         }).catch(error => {
             console.log(error.response)
@@ -68,20 +68,25 @@ const Dashboard = () => {
     }
 
     const purchaseItem = () => {
-        const wallets = data.business.wallets;
-        let receiver = ''
-        for (const wallet of wallets) {
-            if (wallet.isDefault === true) receiver = wallet.id;
-        }
-        Request.purchaseProduct({ amount: selected.amount, currency: selected.currency, sender: user.wallet, receiver: receiver }).then((response) => {
-            setOpen(false);
-            toast.success('You purchased product successfully.');
-        }).catch(error => {
-            console.log(error.response)
-            if (error.response.status == 401) toast.error('The balance has been exceeded.')
-            else toast.error('Purchasing product failed.')
+        if (user) {
+            const wallets = data.business.wallets;
+            let receiver = ''
+            for (const wallet of wallets) {
+                if (wallet.isDefault === true) receiver = wallet.id;
+            }
+            Request.purchaseProduct({ amount: selected.amount, currency: selected.currency, sender: user?.wallet, receiver: receiver }).then((response) => {
+                setOpen(false);
+                toast.success('You purchased product successfully.');
+            }).catch(error => {
+                console.log(error.response)
+                if (error.response.status == 401) toast.error('The balance has been exceeded.')
+                else toast.error('Purchasing product failed.')
 
-        });
+            });
+        } else {
+            toast.error('You are not logged in. Please log in first.')
+        }
+
     }
 
     return (
@@ -229,6 +234,6 @@ const Dashboard = () => {
         </ApexChartWrapper>
     )
 }
-Dashboard.getLayout = page => <DashboardLayout>{page}</DashboardLayout>
+Dashboard.getLayout = page => <PublicLayout>{page}</PublicLayout>
 
 export default Dashboard

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 
 export const AuthGuard = (props) => {
-  const { children } = props;
+  const { children, requireAuth } = props;
   const router = useRouter();
   const ignore = useRef(false);
   const [checked, setChecked] = useState(false);
@@ -26,7 +26,7 @@ export const AuthGuard = (props) => {
       }
       ignore.current = true;
 
-      if (!isAuthenticated) {
+      if (!isAuthenticated && requireAuth) {
         router
           .replace({
             pathname: '/pages/login',
