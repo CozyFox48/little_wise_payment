@@ -14,12 +14,12 @@ import { ArrowRight, ArrowLeft } from 'mdi-material-ui'
 const TabSecurity = ({ invoices, data, setValue, setRequestBody }) => {
 
   const payaction = (row) => {
-    console.log(row);
     setRequestBody({
       amount: row.amount,
       type: row.type.toLowerCase(),
       receiver: row.sender,
-      currency: row.currency
+      currency: row.currency,
+      invoice: row._id
     });
     setValue('send');
   }

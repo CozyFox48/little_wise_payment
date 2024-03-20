@@ -2,6 +2,7 @@ import withAuth from "src/server/utils/withAuth";
 import Wallet from "src/server/model/wallet";
 import dbConnect from "src/server/dbConnect";
 import transactions from "src/server/model/transactions";
+import business from "src/server/model/business";
 
 const handler = async (req, res) => {
     await dbConnect();

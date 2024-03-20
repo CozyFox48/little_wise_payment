@@ -2,6 +2,7 @@ import withAuth from "src/server/utils/withAuth";
 import Wallet from "src/server/model/wallet";
 import Invoice from "src/server/model/invoices";
 import dbConnect from "src/server/dbConnect";
+import business from "src/server/model/business";
 
 const handler = async (req, res) => {
     await dbConnect();
@@ -13,6 +14,7 @@ const handler = async (req, res) => {
             let response_result = [];
             for (let each_invoice of result.invoices) {
                 let each_result = {
+                    _id: each_invoice._id,
                     sender: each_invoice.sender,
                     receiver: each_invoice.receiver,
                     amount: each_invoice.amount,
@@ -61,8 +63,6 @@ const handler = async (req, res) => {
                 message: e.message
             });
         }
-
-    } else {
 
     }
 }

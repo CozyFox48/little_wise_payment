@@ -54,7 +54,8 @@ const AccountSettings = ({ id }) => {
     amount: 0,
     type: 'user',
     receiver: '',
-    currency: 'USD'
+    currency: 'USD',
+    invoice: null
   });
 
   useEffect(() => {

@@ -5,6 +5,7 @@ import User from "src/server/model/user";
 import dbConnect from "src/server/dbConnect";
 import Business from "src/server/model/business";
 import Wallet from "src/server/model/wallet";
+import Invoice from "src/server/model/invoices";
 
 const handler = async (req, res) => {
   await dbConnect();
@@ -39,6 +40,11 @@ const handler = async (req, res) => {
         if (_receiver.balance[i].currency === req.body.data.currency) _receiver.balance[i].amount = _receiver.balance[i].amount + adding;
       }
       await _receiver.save();
+
+
+      if (req.body.data.invoice) {
+        await Invoice.findByIdAndUpdate(req.body.data.invoice, { $set: { payment: transaction._id } })
+      }
 
       return res.status(200).json({
         success: true

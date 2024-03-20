@@ -19,7 +19,6 @@ const TabInfo = ({ requestBody, setRequestBody, data, getData }) => {
 
   const sendMoney = () => {
     let flag = false;
-
     data.balance.forEach(each => {
       if (each.currency === requestBody.currency && requestBody.amount > each.amount) {
         toast.error('The balance has been exceeded.');
@@ -36,6 +35,13 @@ const TabInfo = ({ requestBody, setRequestBody, data, getData }) => {
         Request.createTrans({ ...requestBody, business: settings.selectedProject, sender: data._id }).then((response) => {
           toast.success('Sent money successfully.');
           getData();
+          setRequestBody({
+            amount: 0,
+            type: 'user',
+            receiver: '',
+            currency: 'USD',
+            invoice: null
+          });
         }).catch(error => {
           console.log(error.response);
           toast.error('Failed to send money.');
@@ -83,6 +89,8 @@ const TabInfo = ({ requestBody, setRequestBody, data, getData }) => {
               type='number'
               onChange={(event) => { setRequestBody(prev => { return { ...prev, amount: event.target.value } }) }} />
           </Grid>
+          <Grid item xs={12}>{requestBody.invoice ? 'This is payment for invoice' : ''}</Grid>
+
           <Grid item xs={12}>
             <Button variant='contained' sx={{ marginRight: 3.5 }} onClick={sendMoney}>
               Send
