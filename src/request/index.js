@@ -100,6 +100,10 @@ class Service {
     deletePrice4Product(product_id, data) {
         return api.delete(`/api/product/price/${product_id}`, { data });
     }
+
+    purchaseProduct(data) {
+        return api.post(`/api/product/purchase`, { data });
+    }
 }
 
 export default new Service();
