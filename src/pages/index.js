@@ -14,6 +14,7 @@ import { useSettings } from 'src/@core/hooks/useSettings';
 import { useRouter } from 'next/router';
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 import toast from 'react-hot-toast';
+import { useAuthContext } from 'src/@core/context/auth-context';
 
 const TriangleImg = styled('img')({
   right: 0,
@@ -37,6 +38,7 @@ const style = {
 
 const Dashboard = () => {
   const { saveSettings } = useSettings();
+  const { user } = useAuthContext();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({ title: '', description: '' })
   const [businesses, setBussinesses] = useState([]);
@@ -113,6 +115,21 @@ const Dashboard = () => {
       </Modal>
       <Grid container spacing={6}>
         <Grid item xs={12}>
+          <Typography variant='h4'>Personal Wallet</Typography>
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <Card sx={{ position: 'relative', height: '120px' }}>
+            <CardContent>
+              <Typography variant='h6' sx={{ overflow: "hidden", textOverflow: "ellipsis" }}>{user.username}'s Personal Wallet</Typography>
+              <Button variant='contained' sx={{ mt: 3 }} size="small" onClick={() => {
+                router.push('/wallet/');
+              }}>
+                View Wallet
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12}>
           <Typography variant='h4'>All Projects</Typography>
         </Grid>
         <Grid item xs={12}>
@@ -121,7 +138,7 @@ const Dashboard = () => {
           </Button>
         </Grid>
         {businesses.map((each, key) =>
-          <Grid item xs={12} md={4} key={key}>
+          <Grid item xs={12} md={6} lg={4} key={key}>
             <Card sx={{ position: 'relative', height: '200px' }}>
               <CardContent>
                 <Typography variant='h6' sx={{ overflow: "hidden", textOverflow: "ellipsis" }}>{each.title}</Typography>

@@ -60,7 +60,7 @@ const TabInfo = ({ requestBody, setRequestBody, data, getData }) => {
               <FormLabel sx={{ fontSize: '0.875rem' }}>Receiver type</FormLabel>
               <RadioGroup row aria-label='receiver' name='account-settings-info-radio' value={requestBody.type}
                 onChange={(event) => { setRequestBody(prev => { return { ...prev, type: event.target.value } }) }}>
-                <FormControlLabel value='user' label='User' control={<Radio />} />
+                <FormControlLabel value='user' label='Individual' control={<Radio />} />
                 <FormControlLabel value='business' label='Business' control={<Radio />} />
               </RadioGroup>
             </FormControl>

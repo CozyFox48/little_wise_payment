@@ -21,7 +21,7 @@ const TabSecurity = ({ transactions, data }) => {
               <TableCell>Type</TableCell>
               <TableCell>Account Type</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Description</TableCell>
+              <TableCell>UPI</TableCell>
               <TableCell>Amount</TableCell>
               <TableCell>Currency</TableCell>
             </TableRow>
